@@ -25,7 +25,7 @@ public class calc extends JFrame{
         super("My simple calculator");
         this.setContentPane(JPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(350,200);
+        this.setSize(450,300);
 
         sub.addActionListener(new ActionListener() {
             @Override
