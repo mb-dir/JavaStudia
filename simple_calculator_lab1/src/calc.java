@@ -11,8 +11,10 @@ public class calc extends JFrame{
     private JButton sub;
     private JLabel resultLabel;
     private javax.swing.JPanel JPanel;
+    private JButton multiplyButton;
+    private JButton divButton;
 
-    int a,b,result;
+    double a,b,result;
 
     public static void main(String[] args) {
         calc calculator = new calc();
@@ -23,29 +25,73 @@ public class calc extends JFrame{
         super("My simple calculator");
         this.setContentPane(JPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(700,500);
+        this.setSize(350,200);
 
         sub.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                a = Integer.parseInt(fieldA.getText());
-                b = Integer.parseInt(fieldB.getText());
+                try{
+                    a = Double.parseDouble(fieldA.getText());
+                    b = Double.parseDouble(fieldB.getText());
 
-                result = a-b;
+                    result = a-b;
 
-                resultLabel.setText("Wynik to: " + result);
+                    resultLabel.setText("Wynik to: " + result);
+                }catch (NumberFormatException ev){
+                    JOptionPane.showMessageDialog(null, "Pole nie może być puste");
+                }
             }
         });
 
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                a = Integer.parseInt(fieldA.getText());
-                b = Integer.parseInt(fieldB.getText());
+                try{
+                    a = Double.parseDouble(fieldA.getText());
+                    b = Double.parseDouble(fieldB.getText());
 
-                result = a+b;
+                    result = a+b;
 
-                resultLabel.setText("Wynik to: " + result);
+                    resultLabel.setText("Wynik to: " + result);
+                }catch (NumberFormatException ev){
+                    JOptionPane.showMessageDialog(null, "Pole nie może być puste");
+                }
+            }
+        });
+
+        multiplyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    a = Double.parseDouble(fieldA.getText());
+                    b = Double.parseDouble(fieldB.getText());
+
+                    result = a*b;
+
+                    resultLabel.setText("Wynik to: " + result);
+                }catch (NumberFormatException ev){
+                    JOptionPane.showMessageDialog(null, "Pole nie może być puste");
+                }
+            }
+        });
+
+        divButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    a = Double.parseDouble(fieldA.getText());
+                    b = Double.parseDouble(fieldB.getText());
+
+                    if(b!=0) {
+                        result = a/b;
+                        resultLabel.setText("Wynik to: " + result);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Nie można dzielić przez 0");
+                    }
+
+                }catch (NumberFormatException ev){
+                    JOptionPane.showMessageDialog(null, "Pole nie może być puste");
+                }
             }
         });
     }
