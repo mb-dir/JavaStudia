@@ -6,7 +6,8 @@ public class Main {
     static int MAX_V = 10;
 
     public static void main(String[] args) {
-        System.out.println(newtonDynamically(4,2));
+
+        System.out.println(newtonDynamically(5,6));
     }
     //Fibonaci rekurencja
     public static int fib(int n){
@@ -43,17 +44,32 @@ public class Main {
     }
 
     //Newton dynamicznie
-    public static int newtonDynamically(int n, int k){
+    public static int newtonDynamically(int k, int n){
         int[][] arr = new int[k+1][n+1];
-
-        for(int i = 0; i < n; i++){
-            arr[i][0] = 1;
-            for(int j = 0; j < k; j++){
-                if(i == j) arr[i][j] = 1;
-                if(j < i) arr[i][j] =arr[i-1][j-1]+arr[i-1][j];
+        //k(wiersz)==0
+        for(int i = 0; i <= n; i++){
+            arr[0][i] = 1;
+        }
+        //k==n(przekątna)
+        for(int j = 0; j <= k; j++){
+            for(int i = 0; i <= n; i++){
+                if(j==i)arr[j][i] = 1;
             }
         }
 
-        return arr[n-1][k-1];
+        for(int j = 1; j <= k; j++){
+            for(int i = 2; i <= n; i++){
+                if(i>j) arr[j][i] = arr[j-1][i-1] +arr[j][i-1];
+            }
+        }
+
+        for(int j = 0; j <= k; j++){
+            for(int i = 0; i <= n; i++){
+                System.out.print(arr[j][i] + "\t");
+            }
+            System.out.println("");
+        }
+
+        return arr[k][n];
     }
 }
