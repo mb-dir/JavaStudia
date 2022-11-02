@@ -44,32 +44,31 @@ public class Main {
     }
 
     //Newton dynamicznie
-    public static int newtonDynamically(int k, int n){
-        int[][] arr = new int[k+1][n+1];
-        //k(wiersz)==0
-        for(int i = 0; i <= n; i++){
-            arr[0][i] = 1;
+    public static int newtonDynamically(int K, int N){
+        int arr[][] = new int[K+1][N+1];
+        for(int n = 0; n<=N; n++){
+            arr[0][n]=1;
         }
-        //k==n(przekątna)
-        for(int j = 0; j <= k; j++){
-            for(int i = 0; i <= n; i++){
-                if(j==i)arr[j][i] = 1;
+
+        for(int k = 0; k<=K; k++){
+            for(int n = 0; n<=N; n++){
+                if(k==n) arr[k][n]=1;
             }
         }
 
-        for(int j = 1; j <= k; j++){
-            for(int i = 2; i <= n; i++){
-                if(i>j) arr[j][i] = arr[j-1][i-1] +arr[j][i-1];
+        for(int k = 1; k<=K; k++){
+            for(int n = 2; n<=N; n++){
+                if(k<n) arr[k][n]=arr[k-1][n-1] + arr[k][n-1];
             }
         }
 
-        for(int j = 0; j <= k; j++){
-            for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= K; j++){
+            for(int i = 0; i <= N; i++){
                 System.out.print(arr[j][i] + "\t");
             }
             System.out.println("");
         }
 
-        return arr[k][n];
+        return arr[K][N];
     }
 }
