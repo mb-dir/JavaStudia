@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println(newtonDynamically(5,6));
+        PDynalically();
     }
     //Fibonaci rekurencja
     public static int fib(int n){
@@ -33,6 +33,39 @@ public class Main {
         if (i == 0 && v >= V[i]) return W[i];
         if (i != 0 && V[i]>v) return P(i-1, v);
         return Math.max(P(i-1, v), W[i] + P(i-1, v-V[i]));
+    }
+
+    //Plecak dynamicznie
+    public static void PDynalically(){
+        int wartosci[] = {1,2,5,6};
+        int objetosci[] = {2,3,4,5};
+        int objPlecaka = 8;
+
+        int arr[][] = new int[wartosci.length + 1][objPlecaka+1];
+
+        for(int i = 0; i < wartosci.length+1; i++){
+            arr[i][0] = 0;
+        }
+        for(int i = 0; i < objPlecaka+1; i++){
+            arr[0][i] = 0;
+        }
+
+        for(int i = 1; i < wartosci.length; i++){
+            for(int j = 1; j < objPlecaka; j++){
+                if(j-objetosci[i]<0){
+                    arr[i][j] = arr[i-1][j];
+                }else{
+                    arr[i][j]=Math.max(arr[i-1][j], arr[i-1][j-objetosci[i]]+wartosci[i]);
+                }
+            }
+        }
+
+        for(int i = 0; i < wartosci.length+1; i++){
+            for(int j = 0; j < objPlecaka+1; j++){
+                System.out.print(arr[i][j] + "  ");
+            }
+            System.out.println();
+        }
     }
 
     //Newton rekurencja
