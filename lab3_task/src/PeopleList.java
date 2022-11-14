@@ -1,18 +1,16 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class PeopleList extends JFrame {
     private javax.swing.JPanel JPanel;
-    private JList list1;
     private JTextField nameInput;
     private JTextField surnameInput;
     private JTextField phoneInput;
     private JTextField addressInput;
-    private JTextField DoFInput;
+    private JTextField DoBInput;
     private JLabel ageLabel;
     private JButton saveNewButton;
     private JButton saveExistingButton;
@@ -36,10 +34,10 @@ public class PeopleList extends JFrame {
             listOfPeople.add(p);
         }
 
-        String peopleData[] = new String[6];
+        String peopleData[] = new String[listOfPeople.size()];
         peopleData[0]="";
 
-        for(int i = 1; i <= 5; i++){
+        for(int i = 1; i < listOfPeople.size(); i++){
             String personData = listOfPeople.get(i).name + " " + listOfPeople.get(i).surname;
             peopleData[i] = personData;
         }
@@ -66,16 +64,32 @@ public class PeopleList extends JFrame {
                     surnameInput.setText(selectedPerson.surname);
                     phoneInput.setText(selectedPerson.phoneNumber);
                     addressInput.setText(selectedPerson.address);
-                    DoFInput.setText(selectedPerson.dateOfBirth.toString());
+                    DoBInput.setText(selectedPerson.dateOfBirth.toString());
                 }else{
                     nameInput.setText("");
                     surnameInput.setText("");
                     phoneInput.setText("");
                     addressInput.setText("");
-                    DoFInput.setText("");
+                    DoBInput.setText("");
                 }
             }
         });
 
+        saveNewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Person p = new Person(nameInput.getText(), surnameInput.getText(), phoneInput.getText(), addressInput.getText(), new Date(DoBInput.getText()));
+                listOfPeople.add(p);
+                String peopleData[] = new String[listOfPeople.size()];
+                peopleData[0]="";
+
+                for(int i = 1; i < listOfPeople.size(); i++){
+                    String personData = listOfPeople.get(i).name + " " + listOfPeople.get(i).surname;
+                    peopleData[i] = personData;
+                }
+
+                comboBox1.setModel(new DefaultComboBoxModel(peopleData));
+            }
+        });
     }
 }
