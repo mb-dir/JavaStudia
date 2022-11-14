@@ -1,11 +1,18 @@
-import org.w3c.dom.ls.LSOutput;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class PeopleList extends JFrame {
     private javax.swing.JPanel JPanel;
+    private JList list1;
+    private JTextField nameInput;
+    private JTextField surnameInput;
+    private JTextField phoneInput;
+    private JTextField addressInput;
+    private JTextField DoFInput;
+    private JLabel ageLabel;
+    private JButton saveNewButton;
+    private JButton saveExistingButton;
     private JComboBox comboBox1;
 
     public static void main(String[] args) {
@@ -17,7 +24,7 @@ public class PeopleList extends JFrame {
         super("People list");
         this.setContentPane(JPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 300);
+        this.setSize(500, 400);
 
         ArrayList<Person> listOfPeople = new ArrayList<Person>();
 
@@ -32,7 +39,7 @@ public class PeopleList extends JFrame {
             String personData = listOfPeople.get(i).name + " " + listOfPeople.get(i).surname + (i+1);
             peopleData[i] = personData;
         }
-        comboBox1.setModel(new DefaultComboBoxModel(peopleData));
+        list1.setModel(new DefaultComboBoxModel(peopleData));
 
     }
 }
