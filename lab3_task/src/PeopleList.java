@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class PeopleList extends JFrame {
@@ -32,7 +33,7 @@ public class PeopleList extends JFrame {
         //Create ArrayList of sample people and push it to combobox
         ArrayList<Person> listOfPeople = new ArrayList<Person>();
         for(int i = 0; i <= 5; i++){
-            Person p = new Person("jan" + i, "paweł" + i,"2137", "watykan", LocalDate.of(2015, Month.FEBRUARY, 20));
+            Person p = new Person("John" + i, "Paoulo" + i,"20103070", "Papieska/Aleja "+i, LocalDate.of(2010+i, Month.FEBRUARY, 10+i));
             listOfPeople.add(p);
         }
 
@@ -67,12 +68,20 @@ public class PeopleList extends JFrame {
                     phoneInput.setText(selectedPerson.phoneNumber);
                     addressInput.setText(selectedPerson.address);
                     DoBInput.setText(selectedPerson.dateOfBirth.toString());
+
+                    //calculate the age
+                    LocalDate DoB = LocalDate.parse(selectedPerson.dateOfBirth.toString());
+                    LocalDate curDate = LocalDate.now();
+                    if (DoB != null){
+                        ageLabel.setText("Age: " + Period.between(DoB, curDate).getYears() + " years");
+                    }
                 }else{
                     nameInput.setText("");
                     surnameInput.setText("");
                     phoneInput.setText("");
                     addressInput.setText("");
                     DoBInput.setText("");
+                    ageLabel.setText("Age: 0 years");
                 }
             }
         });
@@ -92,6 +101,14 @@ public class PeopleList extends JFrame {
                 }
 
                 comboBox1.setModel(new DefaultComboBoxModel(peopleData));
+
+                //reset inputs values after adding new person
+                nameInput.setText("");
+                surnameInput.setText("");
+                phoneInput.setText("");
+                addressInput.setText("");
+                DoBInput.setText("");
+                ageLabel.setText("Age: 0 years");
             }
         });
     }
