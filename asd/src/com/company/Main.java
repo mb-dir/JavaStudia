@@ -50,12 +50,12 @@ public class Main {
             arr[0][i] = 0;
         }
 
-        for(int i = 1; i < wartosci.length; i++){
-            for(int j = 1; j < objPlecaka; j++){
-                if(j-objetosci[i]<0){
+        for(int i = 1; i <= wartosci.length; i++){
+            for(int j = 1; j <= objPlecaka; j++){
+                if(j-objetosci[i-1]<0){
                     arr[i][j] = arr[i-1][j];
                 }else{
-                    arr[i][j]=Math.max(arr[i-1][j], arr[i-1][j-objetosci[i]]+wartosci[i]);
+                    arr[i][j]=Math.max(arr[i-1][j], arr[i-1][j-objetosci[i-1]]+wartosci[i-1]);
                 }
             }
         }
