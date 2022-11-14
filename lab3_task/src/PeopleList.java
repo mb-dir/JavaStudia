@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class PeopleList extends JFrame {
     private javax.swing.JPanel JPanel;
@@ -30,7 +32,7 @@ public class PeopleList extends JFrame {
         //Create ArrayList of sample people and push it to combobox
         ArrayList<Person> listOfPeople = new ArrayList<Person>();
         for(int i = 0; i <= 5; i++){
-            Person p = new Person("jan" + i, "paweł" + i,"2137", "watykan", new Date("Thu, Sep 29 2018"));
+            Person p = new Person("jan" + i, "paweł" + i,"2137", "watykan", LocalDate.of(2015, Month.FEBRUARY, 20));
             listOfPeople.add(p);
         }
 
@@ -79,7 +81,7 @@ public class PeopleList extends JFrame {
         saveNewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Person p = new Person(nameInput.getText(), surnameInput.getText(), phoneInput.getText(), addressInput.getText(), new Date(DoBInput.getText()));
+                Person p = new Person(nameInput.getText(), surnameInput.getText(), phoneInput.getText(), addressInput.getText(), LocalDate.parse(DoBInput.getText()));
                 listOfPeople.add(p);
                 String peopleData[] = new String[listOfPeople.size()];
                 peopleData[0]="";
