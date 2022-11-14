@@ -1,12 +1,13 @@
 package com.company;
 
 public class Main {
-    final static int[] V = {6,2,3,2,3,1};
-    final static int[] W = {6,4,5,7,10,2};
+    //Data for knapstack problem
+    final static int[] V = {6,2,3,2,3,1};//obj przedmiotów
+    final static int[] profits = {6,4,5,7,10,2};//wartosci przedmiotów
     static int MAX_V = 10;
 
     public static void main(String[] args) {
-
+        System.out.println(P(V.length-1, MAX_V));
         PDynalically();
     }
     //Fibonaci rekurencja
@@ -30,39 +31,39 @@ public class Main {
     //Plecak rekurencja
     public static int P(int i, int v){
         if (i == 0 && v < V[i]) return 0;
-        if (i == 0 && v >= V[i]) return W[i];
+        if (i == 0 && v >= V[i]) return profits[i];
         if (i != 0 && V[i]>v) return P(i-1, v);
-        return Math.max(P(i-1, v), W[i] + P(i-1, v-V[i]));
+        return Math.max(P(i-1, v), profits[i] + P(i-1, v-V[i]));
     }
 
     //Plecak dynamicznie
     public static void PDynalically(){
-        int wartosci[] = {1,2,5,6};
-        int objetosci[] = {2,3,4,5};
-        int objPlecaka = 8;
+        int profits[] = {6,4,5,7,10,2};//wartosci przedmiotów
+        int V[] = {6,2,3,2,3,1};//obj przedmiotów
+        int MAX_V = 10;
 
-        int arr[][] = new int[wartosci.length + 1][objPlecaka+1];
+        int arr[][] = new int[profits.length + 1][MAX_V+1];
 
-        for(int i = 0; i < wartosci.length+1; i++){
+        for(int i = 0; i < profits.length+1; i++){
             arr[i][0] = 0;
         }
-        for(int i = 0; i < objPlecaka+1; i++){
+        for(int i = 0; i < MAX_V+1; i++){
             arr[0][i] = 0;
         }
 
-        for(int i = 1; i <= wartosci.length; i++){
-            for(int j = 1; j <= objPlecaka; j++){
-                if(j-objetosci[i-1]<0){
+        for(int i = 1; i <= profits.length; i++){
+            for(int j = 1; j <= MAX_V; j++){
+                if(j-V[i-1]<0){
                     arr[i][j] = arr[i-1][j];
                 }else{
-                    arr[i][j]=Math.max(arr[i-1][j], arr[i-1][j-objetosci[i-1]]+wartosci[i-1]);
+                    arr[i][j]=Math.max(arr[i-1][j], arr[i-1][j-V[i-1]]+profits[i-1]);
                 }
             }
         }
 
-        for(int i = 0; i < wartosci.length+1; i++){
-            for(int j = 0; j < objPlecaka+1; j++){
-                System.out.print(arr[i][j] + "  ");
+        for(int i = 0; i < V.length+1; i++){
+            for(int j = 0; j < MAX_V+1; j++){
+                System.out.print(arr[i][j] + "\t");
             }
             System.out.println();
         }
