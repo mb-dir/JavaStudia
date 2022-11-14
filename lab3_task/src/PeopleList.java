@@ -27,10 +27,10 @@ public class PeopleList extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 400);
 
+        //Create ArrayList of sample people and push it to combobox
         ArrayList<Person> listOfPeople = new ArrayList<Person>();
-
         for(int i = 0; i <= 5; i++){
-            Person p = new Person("jan" + i, "paweł" + i,"2137", "watykan", new Date("February 09, 2004"));
+            Person p = new Person("jan" + i, "paweł" + i,"2137", "watykan", new Date("Thu, Sep 29 2018"));
             listOfPeople.add(p);
         }
 
@@ -41,14 +41,14 @@ public class PeopleList extends JFrame {
             String personData = listOfPeople.get(i).name + " " + listOfPeople.get(i).surname;
             peopleData[i] = personData;
         }
-
         comboBox1.setModel(new DefaultComboBoxModel(peopleData));
 
-
+        //Handle clicking on combobox - show info about person in inputs
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String data = ""+comboBox1.getItemAt(comboBox1.getSelectedIndex());
+                //Treat name as id to find suitable object(person) in array list
                 String name = data.split(" ")[0];
 
                 Person selectedPerson = null;
@@ -75,6 +75,7 @@ public class PeopleList extends JFrame {
             }
         });
 
+        //Handling adding new person - create new Person based on data form inputs, add it to array list and rerender combobox
         saveNewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
