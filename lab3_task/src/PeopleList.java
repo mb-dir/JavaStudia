@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.Period;
 import java.util.ArrayList;
@@ -63,6 +62,9 @@ public class PeopleList extends JFrame {
                 }
 
                 if(selectedPerson != null){
+                    //enable saveExistingButton - user can edit selected person
+                    saveExistingButton.setEnabled(true);
+
                     nameInput.setText(selectedPerson.name);
                     surnameInput.setText(selectedPerson.surname);
                     phoneInput.setText(selectedPerson.phoneNumber);
@@ -76,6 +78,7 @@ public class PeopleList extends JFrame {
                         ageLabel.setText("Age: " + Period.between(DoB, curDate).getYears() + " years");
                     }
                 }else{
+                    saveExistingButton.setEnabled(false);
                     nameInput.setText("");
                     surnameInput.setText("");
                     phoneInput.setText("");
@@ -103,6 +106,33 @@ public class PeopleList extends JFrame {
                 comboBox1.setModel(new DefaultComboBoxModel(peopleData));
 
                 //reset inputs values after adding new person
+                nameInput.setText("");
+                surnameInput.setText("");
+                phoneInput.setText("");
+                addressInput.setText("");
+                DoBInput.setText("");
+                ageLabel.setText("Age: 0 years");
+            }
+        });
+
+        //Edit existing person
+        saveExistingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Person p = new Person(nameInput.getText(), surnameInput.getText(), phoneInput.getText(), addressInput.getText(), LocalDate.parse(DoBInput.getText()));
+                listOfPeople.set(comboBox1.getSelectedIndex(), p);
+
+                String peopleData[] = new String[listOfPeople.size()];
+                peopleData[0]="";
+
+                for(int i = 1; i < listOfPeople.size(); i++){
+                    String personData = listOfPeople.get(i).name + " " + listOfPeople.get(i).surname;
+                    peopleData[i] = personData;
+                }
+
+                comboBox1.setModel(new DefaultComboBoxModel(peopleData));
+
+                //reset inputs values after editing
                 nameInput.setText("");
                 surnameInput.setText("");
                 phoneInput.setText("");
