@@ -1,14 +1,17 @@
 package com.company;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Main {
     //Data for knapstack problem
     final static int[] V = {6,2,3,2,3,1};//obj przedmiotów
     final static int[] profits = {6,4,5,7,10,2};//wartosci przedmiotów
     static int MAX_V = 10;
 
-    public static void main(String[] args) {
-        System.out.println(P(V.length-1, MAX_V));
-        PDynalically();
+    public static void main(String[] args) throws IOException {
+        resztaZachlannie();
     }
     //Fibonaci rekurencja
     public static int fib(int n){
@@ -104,5 +107,42 @@ public class Main {
         }
 
         return arr[K][N];
+    }
+
+    public static void resztaZachlannie() throws IOException {
+        InputStreamReader str = new InputStreamReader(System.in);
+        BufferedReader wejscie = new BufferedReader(str);
+        String tekst;
+        final int[] M = {500,200,100,50,20,10,5,2,1};
+        int zl, gr, r, i = 0;
+        System.out.println("Podaj reszte..");
+        System.out.print("zlotych: ");
+        tekst = wejscie.readLine();
+        zl = Integer.parseInt(tekst);
+        System.out.print("groszy: ");
+        tekst = wejscie.readLine();
+        gr = Integer.parseInt(tekst);
+        System.out.print("Reszta: ");
+        r = zl*100 + gr;
+//        while (r > 0)
+//        {
+//            if (r >= M[i])
+//            {
+//                System.out.print(M[i]/100.0 + " ");
+//                r = r - M[i];
+//            }
+//            else
+//                i++;
+//        }
+
+//      HW do wydawania monet dodajemy tablice L z ilościami monet dostępnymi na kasie
+        System.out.println();
+        for(int j = 0; j < M.length; j++){
+            int ile_razy = r/M[j];
+            r = r - (M[j]*ile_razy);
+
+            System.out.println(M[j]/100.0 + " miesci się " + ile_razy + " razy");
+        }
+        System.out.println();
     }
 }

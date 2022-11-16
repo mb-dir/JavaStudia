@@ -112,6 +112,7 @@ public class PeopleList extends JFrame {
                 addressInput.setText("");
                 DoBInput.setText("");
                 ageLabel.setText("Age: 0 years");
+                saveExistingButton.setEnabled(false);
             }
         });
 
@@ -139,6 +140,8 @@ public class PeopleList extends JFrame {
                 addressInput.setText("");
                 DoBInput.setText("");
                 ageLabel.setText("Age: 0 years");
+
+                saveExistingButton.setEnabled(false);
             }
         });
     }
