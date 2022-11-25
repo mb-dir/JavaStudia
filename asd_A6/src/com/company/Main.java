@@ -7,11 +7,10 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 	    int min = 0;
         int max = 1000;
-        int a = 125;
+        int a = getRandomNumber(min, max);
 
         System.out.println(a);
-        recursion(min, 500, max, a);
-
+        recursion(min, (min+max)/2, max, a);
     }
 
     public static int recursion(int left, int p, int right, int a) throws InterruptedException {
@@ -25,7 +24,7 @@ public class Main {
             return recursion(p, (int)(p+right+1)/2, right, a);
         }else{
             System.out.println(p + " za duza");
-            return recursion(left, (int)(p+left-1)/2, p, a);
+            return recursion(left, (int)(p+left)/2, p, a);
         }
     }
 
