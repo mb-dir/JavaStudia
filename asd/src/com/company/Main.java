@@ -3,8 +3,12 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Main {
+
+    static Scanner in = new Scanner(System.in);
+
     //Data for knapstack problem
     final static int[] V = {6,2,3,2,3,1};//obj przedmiotów
     final static int[] profits = {6,4,5,7,10,2};//wartosci przedmiotów
@@ -109,40 +113,29 @@ public class Main {
         return arr[K][N];
     }
 
-    public static void resztaZachlannie() throws IOException {
-        InputStreamReader str = new InputStreamReader(System.in);
-        BufferedReader wejscie = new BufferedReader(str);
-        String tekst;
-        final int[] M = {500,200,100,50,20,10,5,2,1};
-        int zl, gr, r, i = 0;
-        System.out.println("Podaj reszte..");
-        System.out.print("zlotych: ");
-        tekst = wejscie.readLine();
-        zl = Integer.parseInt(tekst);
-        System.out.print("groszy: ");
-        tekst = wejscie.readLine();
-        gr = Integer.parseInt(tekst);
-        System.out.print("Reszta: ");
-        r = zl*100 + gr;
-//        while (r > 0)
-//        {
-//            if (r >= M[i])
-//            {
-//                System.out.print(M[i]/100.0 + " ");
-//                r = r - M[i];
-//            }
-//            else
-//                i++;
-//        }
+    public static void resztaZachlannie(){
+        int[] nominaly_w_gr = {500,200,100,50,20,10,5,2,1};
+        int[] ile_nominalow = {  0,  0,  5,10, 4, 0,0,0,2};//max = 10.82
 
-//      HW do wydawania monet dodajemy tablice L z ilościami monet dostępnymi na kasie
-        System.out.println();
-        for(int j = 0; j < M.length; j++){
-            int ile_razy = r/M[j];
-            r = r - (M[j]*ile_razy);
+        System.out.println("zl: ");
+        int zl = in.nextInt();
 
-            System.out.println(M[j]/100.0 + " miesci się " + ile_razy + " razy");
+        System.out.println("gr: ");
+        int gr = in.nextInt();
+
+        int kwota_w_groszach = zl*100 + gr;
+
+        for(int i = 0; i < nominaly_w_gr.length; i++){
+            int ile_razy = kwota_w_groszach/nominaly_w_gr[i];
+
+            if(ile_razy > ile_nominalow[i]) ile_razy = ile_nominalow[i];
+            if(nominaly_w_gr[i]>=100) System.out.println(nominaly_w_gr[i]/100 + "zl razy: " + ile_razy);
+            else System.out.println(nominaly_w_gr[i] + "gr razy: " + ile_razy);
+
+            kwota_w_groszach -= nominaly_w_gr[i]*ile_razy;
         }
-        System.out.println();
+        if(kwota_w_groszach !=0){
+            System.out.println("Do wydania została kwota: " + (double)kwota_w_groszach/100 + " brak odpowiednich nominałów");
+        }
     }
 }
