@@ -47,7 +47,7 @@ public class texteditor extends JFrame{
                 }else{
                     Font font = new Font("Arial", Font.PLAIN, 12);
                     textArea1.setFont(font);
-                    bButton.setBackground(new Color(60,63,65));
+                    bButton.setBackground(new Color(255,255,255));
                 }
             }
         });
