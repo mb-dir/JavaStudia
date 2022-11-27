@@ -13,6 +13,7 @@ public class texteditor extends JFrame{
     private JTextArea textArea1;
     boolean isBold = false;
     boolean isItalic = false;
+    int fontSize = 12;
 
     public static void main(String[] args) {
         texteditor Editor = new texteditor();
@@ -41,11 +42,11 @@ public class texteditor extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 isBold =!isBold;
                 if(isBold){
-                    Font font = new Font("Arial", Font.BOLD, 12);
+                    Font font = new Font("Arial", Font.BOLD, fontSize);
                     textArea1.setFont(font);
                     bButton.setBackground(Color.cyan);
                 }else{
-                    Font font = new Font("Arial", Font.PLAIN, 12);
+                    Font font = new Font("Arial", Font.PLAIN, fontSize);
                     textArea1.setFont(font);
                     bButton.setBackground(new Color(255,255,255));
                 }
@@ -56,13 +57,33 @@ public class texteditor extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 isItalic =!isItalic;
                 if(isItalic){
-                    Font font = new Font("Arial", Font.ITALIC, 12);
+                    Font font = new Font("Arial", Font.ITALIC, fontSize);
                     textArea1.setFont(font);
                     iButton.setBackground(Color.cyan);
                 }else{
-                    Font font = new Font("Arial", Font.PLAIN, 12);
+                    Font font = new Font("Arial", Font.PLAIN, fontSize);
                     textArea1.setFont(font);
+                    iButton.setBackground(new Color(255,255,255));
                 }
+            }
+        });
+
+        zButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fontSize+=2;
+                Font font = new Font("Arial", Font.PLAIN, fontSize);
+                textArea1.setFont(font);
+            }
+        });
+
+        pButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fontSize-=2;
+                if(fontSize < 2) fontSize = 2;
+                Font font = new Font("Arial", Font.PLAIN, fontSize);
+                textArea1.setFont(font);
             }
         });
     }
