@@ -3,10 +3,11 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-
+    //ZADANIE Z FIGURĄ - nextInt(0,1001)/1000 - dostaniemy liczbe z zakresu <0,1>
     static Scanner in = new Scanner(System.in);
 
     //Data for knapstack problem
@@ -15,7 +16,7 @@ public class Main {
     static int MAX_V = 10;
 
     public static void main(String[] args) throws IOException {
-        resztaZachlannie();
+        poleFigury();
     }
     //Fibonaci rekurencja
     public static int fib(int n){
@@ -137,5 +138,22 @@ public class Main {
         if(kwota_w_groszach !=0){
             System.out.println("Do wydania została kwota: " + (double)kwota_w_groszach/100 + " brak odpowiednich nominałów");
         }
+    }
+
+    //Pole figury - Monte Carlo
+    public static void poleFigury(){
+        Random rand = new Random();
+        int pktWFigurze = 0;
+
+        for(int i = 0; i < 100000; i++){
+            double x = rand.nextInt(0,1001)/1000.0;
+            double y = rand.nextInt(0,1001)/1000.0;
+
+            if(y<=Math.sin(x)){
+                pktWFigurze++;
+            }
+        }
+
+        System.out.println(pktWFigurze/100000.0);
     }
 }
