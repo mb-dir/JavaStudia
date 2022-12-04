@@ -41,8 +41,12 @@ public class texteditor extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 isBold =!isBold;
-                if(isBold){
+                if(isBold && !isItalic){
                     Font font = new Font("Arial", Font.BOLD, fontSize);
+                    textArea1.setFont(font);
+                    bButton.setBackground(Color.cyan);
+                }else if(isBold && isItalic){
+                    Font font = new Font("Arial", Font.BOLD | Font.ITALIC, fontSize);
                     textArea1.setFont(font);
                     bButton.setBackground(Color.cyan);
                 }else{
@@ -56,8 +60,12 @@ public class texteditor extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 isItalic =!isItalic;
-                if(isItalic){
+                if(isItalic && !isBold){
                     Font font = new Font("Arial", Font.ITALIC, fontSize);
+                    textArea1.setFont(font);
+                    iButton.setBackground(Color.cyan);
+                }else if(isBold && isItalic) {
+                    Font font = new Font("Arial", Font.BOLD|Font.ITALIC, fontSize);
                     textArea1.setFont(font);
                     iButton.setBackground(Color.cyan);
                 }else{
