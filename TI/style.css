@@ -1,0 +1,87 @@
+*{
+	box-sizing: border-box;
+}
+body{
+	background: gray;
+	margin: 50px 20px;
+	font-family: Verdena;
+	color: yellow;
+	font-size: 12px;
+}
+.mainTable{
+	width: 800px;
+	height: 400px;
+	border-collapse: collapse;
+	text-align: center;
+	color: black;
+	border: 2px dashed black;
+}
+.mainTable td{
+	border: 2px dashed black;
+	vertical-align: top;
+}
+.yellowTD{
+	background: yellow;
+}
+.redTD{
+	background: red;
+}
+.tableTD{
+	display: flex;
+	justify-content: center;
+	height: 100%;
+}
+.subTable{
+	border-collapse: collapse;
+	width: 30%;
+}
+.subTable td{
+	border: 2px solid black;
+	width: 25px;
+	height: 25px;
+}
+
+.firstList{
+	color: black;
+	font-weight: 600;
+	list-style-type: upper-latin;
+}
+.secondList{
+	font-weight: 400;
+	color: red;
+}
+.thirdList{
+	list-style-type: upper-roman;
+	color: blue;
+}
+.fourthList{
+	list-style-type: disc;
+	color: black;
+	font-style: italic;
+}
+form{
+	color: black;
+	width: 50%;
+}
+legend{
+	text-align: center;
+}
+fieldset{
+	display: flex;
+	justify-content: space-around;
+}
+.inputBox{
+	height: 25px;
+}
+.inputsContainer{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 20px;
+}
+.buttonsContainer{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 20px;
+}

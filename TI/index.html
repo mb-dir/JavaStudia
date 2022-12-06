@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kolokwium TI</title>
+		<link rel="stylesheet" href="./style.css"/>
+	</head>
+	<body>
+		<table class="mainTable">
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td rowspan="5" class="yellowTD">5</td>
+			</tr>
+			<tr>
+				<td rowspan="3">6</td>
+				<td>7</td>
+				<td colspan="2">8</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="redTD">9</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>11</td>
+				<td colspan="2">
+					<div class="tableTD">
+						<table class="subTable">
+						<tr>
+							<td>a</td>
+							<td>b</td>
+						</tr>
+						<tr>
+							<td>c</td>
+							<td>d</td>
+						</tr>
+					</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">13</td>
+			</tr>
+		</table>
+		
+		<ul class="firstList">
+			<li>Pozycja pierwsza</li>
+			<li>
+				Pozycja druga
+				<ol class="secondList">
+					<li value="7">Pozycja pierwsza</li>
+					<li value="9">
+						Pozycja druga
+						<ol class="thirdList">
+							<li>Pozycja pierwsza</li>
+							<li>
+								Pozycja druga
+								<ul class="fourthList">
+									<li>Pozycja pierwsza</li>
+								</ul>
+							</li>
+						</ol>
+					</li>
+					<li value="11">Pozycja trzecia</li>
+				</ol>
+			</li>
+			<li>Pozycja trzecia</li>
+		</ul>
+		
+		<form>
+			<fieldset>
+				<legend>Obramowanie formularza</legend>
+				<div>
+					<div class="inputBox">
+						<input checked type="checkbox" id="first"/>
+						<label for="first">Opcja pierwsza</label>
+					</div>
+					
+					<div class="inputBox">
+						<input type="checkbox" id="second"/>
+						<label for="second">Opcja druga</label>
+					</div>
+					
+					<div class="inputBox">
+						<input type="checkbox" id="third"/>
+						<label for="third">Opcja trzecia</label>
+					</div>
+				</div>
+				
+				<div>
+					<div class="inputBox">
+						<input disabled name="dupa" type="radio" id="firstR"/>
+						<label for="firstR">Opcja pierwsza</label>
+					</div>
+					
+					<div class="inputBox">
+						<input name="dupa" type="radio" id="secondR"/>
+						<label for="secondR">Opcja druga</label>
+					</div>
+					
+					<div class="inputBox">
+						<input name="dupa" type="radio" id="thirdR"/>
+						<label for="thirdR">Opcja trzecia</label>
+					</div>
+				</div>
+			</fieldset>
+			
+			<div class="inputsContainer"">
+				<textarea></textarea>
+				
+				<select>
+					<option value="dupa">dupa</option>
+					<option value="dupa1">dupa1</option>
+					<option value="dupa2">dupa2</option>
+					<optgroup label="duuuupa">
+						<option>skrecze z niemena</option>
+					</optgroup>
+				</select>
+			</div>
+			
+			<div class="buttonsContainer">
+				<button>Wyślij</button>
+				<input type="reset"/>
+			</div>
+		</form>
+	</body>
+</html>
