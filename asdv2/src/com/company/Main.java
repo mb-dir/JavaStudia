@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        dupa3();
+        dupa4(550,450,0);
     }
 
     public static int dupa(int n){
@@ -85,6 +85,24 @@ public class Main {
             for(int i = 0; i < nominaly.length; i++){
                 System.out.println(nominaly[i]/100.0 + ": " + uzyte_monety[i] + " razy");
             }
+        }
+    }
+    public static double dupa4(double samice, double samce, int tydzien){
+        if(samce>=samice){
+            System.out.println("tydzień: " + tydzien);
+            System.out.println("samic: " + samice);
+            System.out.println("samców: " + samce);
+            System.out.println("razem: " + (samce+samice));
+            return samce;
+        }else{
+            double ile_nowych = (samce+samce)*0.1;
+            double nowe_samice = ile_nowych*0.55;
+            double nowe_samce = ile_nowych-nowe_samice;
+
+            double ilosc_samic_po_tyg = (samice+nowe_samice) - (samice+nowe_samice)*0.05;
+            double ilosc_samcow_po_tyg = (samce+nowe_samce) - (samce+nowe_samce)*0.02;
+
+            return dupa4(ilosc_samic_po_tyg, ilosc_samcow_po_tyg, tydzien+1);
         }
     }
 }
