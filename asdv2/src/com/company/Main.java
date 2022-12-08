@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        dupa4(550,450,0);
+        dupa6();
     }
 
     public static int dupa(int n){
@@ -107,5 +107,30 @@ public class Main {
 
             return dupa4(nowe_samice + ilosc_samic_po_tyg, nowe_samce + ilosc_samcow_po_tyg, tydzien+1);
         }
+    }
+    public static int dupa5(int n){
+        if(n == 1) return 2;
+        if(n == 2) return 4;
+        return (dupa5(n-1)*dupa5(n-2))/2;
+    }
+
+    public static void dupa6(){
+        int populacja = 100000;
+        double chorzy[] = new double[populacja];
+        chorzy[0] = 10;
+        for(int i = 1; i < chorzy.length; i++){
+            chorzy[i]=chorzy[i-1]+chorzy[i-1]*2;
+            if(i>6){
+                chorzy[i]-=chorzy[i-6];
+            }
+
+            if(chorzy[i] > populacja/2){
+                System.out.println((i+1) + " dnia liczba chorych przekroczyła połowe społeczństwa i wynosi: " + chorzy[i]);
+                break;
+            }
+        }
+//        for(int i = 0; i < 100; i++){
+//            System.out.println(chorzy[i]);
+//        }
     }
 }
