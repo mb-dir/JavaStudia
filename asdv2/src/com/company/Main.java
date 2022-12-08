@@ -88,6 +88,9 @@ public class Main {
         }
     }
     public static double dupa4(double samice, double samce, int tydzien){
+        System.out.println("tydzien: " + tydzien);
+        System.out.println("samice: " + samice + " samce: " + samce);
+        System.out.println();
         if(samce>=samice){
             System.out.println("tydzień: " + tydzien);
             System.out.println("samic: " + samice);
@@ -95,14 +98,14 @@ public class Main {
             System.out.println("razem: " + (samce+samice));
             return samce;
         }else{
-            double ile_nowych = (samce+samce)*0.1;
+            double ilosc_samic_po_tyg = samice - samice*0.05;
+            double ilosc_samcow_po_tyg = samce - samce*0.02;
+
+            double ile_nowych = (ilosc_samic_po_tyg+ilosc_samcow_po_tyg)*0.1;
             double nowe_samice = ile_nowych*0.55;
             double nowe_samce = ile_nowych-nowe_samice;
 
-            double ilosc_samic_po_tyg = (samice+nowe_samice) - (samice+nowe_samice)*0.05;
-            double ilosc_samcow_po_tyg = (samce+nowe_samce) - (samce+nowe_samce)*0.02;
-
-            return dupa4(ilosc_samic_po_tyg, ilosc_samcow_po_tyg, tydzien+1);
+            return dupa4(nowe_samice + ilosc_samic_po_tyg, nowe_samce + ilosc_samcow_po_tyg, tydzien+1);
         }
     }
 }
