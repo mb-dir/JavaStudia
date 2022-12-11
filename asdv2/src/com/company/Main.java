@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        dupa6();
+        dupa9();
     }
 
     public static int dupa(int n){
@@ -116,21 +116,168 @@ public class Main {
 
     public static void dupa6(){
         int populacja = 100000;
-        double chorzy[] = new double[populacja];
+        double chorzy[] = new double[2136];
+        double ozdrowieni[] = new double[2136];
+        double nowi_chorzy[] = new double[2136];
         chorzy[0] = 10;
+        nowi_chorzy[0] = 10;
         for(int i = 1; i < chorzy.length; i++){
-            chorzy[i]=chorzy[i-1]+chorzy[i-1]*2;
-            if(i>6){
-                chorzy[i]-=chorzy[i-6];
+            if(i > 6) {
+                ozdrowieni[i] = chorzy[i - 7];
             }
+            nowi_chorzy[i] = populacja-chorzy[i-1];
+            if(!(nowi_chorzy[i]>= populacja)){
+                nowi_chorzy[i] = (chorzy[i-1] - ozdrowieni[i])*2;
+            }
+            chorzy[i] = nowi_chorzy[i] + chorzy[i-1] - ozdrowieni[i];
+        }
 
-            if(chorzy[i] > populacja/2){
-                System.out.println((i+1) + " dnia liczba chorych przekroczyła połowe społeczństwa i wynosi: " + chorzy[i]);
+        for(int i = 0; i < 25; i++){
+            if(chorzy[i] <= 0){
                 break;
             }
+            System.out.println("Dzień:" + (i+1));
+            System.out.println("Chorzy: " + chorzy[i] + " Nowi chorzy w danym dniu: " + nowi_chorzy[i] + " Ozdrowieni danego dnia: " + ozdrowieni[i]);
         }
-//        for(int i = 0; i < 100; i++){
-//            System.out.println(chorzy[i]);
-//        }
+    }
+
+    public static void dupa7(){
+        Random rand = new Random();
+        int[] nominaly = {500,200,100,50,20,10,5,2,1};//nominaly w groszach
+        int limit_wydanych_monet = 37;
+        int ile_losowan=5;
+        int min_liczba_wydanych_monet = limit_wydanych_monet;
+
+        int[] wydane_monety_w_danej_iteracji = new int[limit_wydanych_monet];
+        int[] min_wydane_monety = new int[limit_wydanych_monet];
+
+
+        for(int i = 0; i < ile_losowan; i++){
+            int liczba_wydanych_monet = 0;
+            int reszta = 527;//5zł 27gr
+            while(reszta > 0 && liczba_wydanych_monet < limit_wydanych_monet){
+                int moneta = nominaly[rand.nextInt(nominaly.length)];
+
+                if(reszta>=moneta){
+                    wydane_monety_w_danej_iteracji[liczba_wydanych_monet]=moneta;
+                    reszta-=moneta;
+                    liczba_wydanych_monet++;
+                }
+            }
+            if(liczba_wydanych_monet < min_liczba_wydanych_monet){
+                min_liczba_wydanych_monet = liczba_wydanych_monet;
+                for(int j = 0; j < liczba_wydanych_monet; j++){
+                    min_wydane_monety[j]=wydane_monety_w_danej_iteracji[j];
+                }
+            }
+        }
+
+        if(min_liczba_wydanych_monet < limit_wydanych_monet){
+            System.out.println("Rozwiązanie");
+            for (int i = 0; i < min_liczba_wydanych_monet; i++) {
+                System.out.print(min_wydane_monety[i]/100.0 + " ");
+            }
+        }else{
+            System.out.println("Nie ma rozwiązania");
+        }
+    }
+
+    public static void dupa8(){
+        Random rand = new Random();
+        final int[][] costs = {
+                {0, 7, 20, 21, 12, 23},
+                {27, 0, 13, 16, 46, 5},
+                {53, 15, 0, 25, 27, 6},
+                {16, 2, 35, 0, 47, 10},
+                {31, 29, 5, 18, 0, 4},
+                {28, 24, 1, 17, 5, 0}
+        };
+        int number_of_flavours = costs.length;
+        int best_sequence[] = new int[number_of_flavours+1];
+        int best_value = 11111111;
+        final int attemps = 10000;
+
+        for (int i = 0; i < attemps; i++) {
+            int already_selected_flavours = 0;
+            int sequence_for_current_attemp[] = new int[number_of_flavours+1];
+            int which_was_selected[] = new int[number_of_flavours];
+
+            while(already_selected_flavours < number_of_flavours){
+                int random_flavour = rand.nextInt(number_of_flavours);
+                if(which_was_selected[random_flavour] == 1) continue;
+                which_was_selected[random_flavour] = 1;
+                sequence_for_current_attemp[already_selected_flavours]=random_flavour;
+                already_selected_flavours++;
+            }
+            sequence_for_current_attemp[6]=sequence_for_current_attemp[0];
+
+            int curr_value = 0;
+
+            for(int d = 0; d < sequence_for_current_attemp.length-1; d++){
+                curr_value+=costs[sequence_for_current_attemp[d]][sequence_for_current_attemp[d+1]];
+            }
+
+            if (curr_value < best_value){
+                best_sequence = sequence_for_current_attemp;
+                best_value=curr_value;
+            }
+        }
+        System.out.println("The best sequence(value: " + best_value +"):");
+
+        for (int i = 0; i < best_sequence.length; i++) {
+            System.out.print(best_sequence[i]+1 + " ");
+        }
+    }
+
+    public static void dupa9(){
+        final int[][] koszty = {
+                {0, 7, 20, 21, 12, 23},
+                {27, 0, 13, 16, 46, 5},
+                {53, 15, 0, 25, 27, 6},
+                {16, 2, 35, 0, 47, 10},
+                {31, 29, 5, 18, 0, 4},
+                {28, 24, 1, 17, 5, 0}
+        };
+        int[] smaki_ktore_byly = new int[koszty.length];
+        int min = 1111111;
+        int start_min = 0;
+        int wiersz=-1;
+        int koszt = 0;
+        int start = 0;
+
+        //znajdz smak od którego zaczynamy
+        for(int i = 0; i < koszty.length; i++){
+            for(int j = 0; j < koszty[0].length; j++){
+                if(koszty[i][j] !=0 && koszty[i][j] < min){
+                    min = koszty[i][j];
+                    wiersz = i;
+                    start = i;
+                    start_min = min;
+                }
+            }
+        }
+        koszt+=min;
+        smaki_ktore_byly[wiersz] = 1;
+
+        System.out.print("Kolejne smaki: " + (wiersz+1) + " ");
+
+        //kolejne smaki
+        int index_min=-1;
+        for (int i = 0; i < koszty.length-1; i++) {
+            int min_koszt_zmiany = 11111;
+            for(int j = 0; j < koszty[0].length; j++){
+                if(koszty[wiersz][j] != 0 && koszty[wiersz][j] < min_koszt_zmiany && smaki_ktore_byly[j] != 1){
+                    min_koszt_zmiany = koszty[wiersz][j];
+                    index_min = j;
+                }
+            }
+            koszt+= koszty[wiersz][index_min];
+            wiersz = index_min;
+            smaki_ktore_byly[wiersz] = 1;
+            System.out.print(wiersz+1 + " ");
+        }
+        System.out.print(start+1);
+        koszt+=koszty[wiersz][start];
+        System.out.println(" Koszt wynosi: " + koszt);
     }
 }
