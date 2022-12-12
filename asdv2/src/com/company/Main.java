@@ -1,12 +1,22 @@
 package com.company;
-
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 
+    final static int[] v = {6,2,3,2,3,1};//obj przedmiotów
+    static final int[] w = {6,4,5,7,10,2};//wartosci przedmiotów
+    static int MAX_V = 10;
+
     public static void main(String[] args) {
         dupa9();
+    }
+
+    public static int dupa10(int i, int V){
+        if(i == 0 && v[i] > V) return 0;
+        if(i == 0 && v[i] <= V) return w[i];
+        if(i > 0 && v[i] > V) return dupa10(i-1,V);
+        return Math.max(dupa10(i-1,V), w[i] + dupa10(i-1,V-v[i]));
     }
 
     public static int dupa(int n){
@@ -184,7 +194,7 @@ public class Main {
 
     public static void dupa8(){
         Random rand = new Random();
-        final int[][] costs = {
+        final int[][] koszty = {
                 {0, 7, 20, 21, 12, 23},
                 {27, 0, 13, 16, 46, 5},
                 {53, 15, 0, 25, 27, 6},
@@ -192,40 +202,39 @@ public class Main {
                 {31, 29, 5, 18, 0, 4},
                 {28, 24, 1, 17, 5, 0}
         };
-        int number_of_flavours = costs.length;
-        int best_sequence[] = new int[number_of_flavours+1];
-        int best_value = 11111111;
-        final int attemps = 10000;
+        int proby = 100;
+        int[] najlepsze = new int[koszty.length+1];
+        int bestValue = 123213123;
 
-        for (int i = 0; i < attemps; i++) {
-            int already_selected_flavours = 0;
-            int sequence_for_current_attemp[] = new int[number_of_flavours+1];
-            int which_was_selected[] = new int[number_of_flavours];
-
-            while(already_selected_flavours < number_of_flavours){
-                int random_flavour = rand.nextInt(number_of_flavours);
-                if(which_was_selected[random_flavour] == 1) continue;
-                which_was_selected[random_flavour] = 1;
-                sequence_for_current_attemp[already_selected_flavours]=random_flavour;
-                already_selected_flavours++;
+        //losuj sekwencje smaków
+        for(int i = 0 ; i < proby; i++){
+            int ile_smakow = 0;
+            int[] czy_smak_był = new int[koszty.length];
+            int sekwencja_dla_danej_proby[] = new int[koszty.length+1];
+            while(ile_smakow < koszty.length){
+                int random_smak = rand.nextInt(koszty.length);
+                if(czy_smak_był[random_smak] == 0){
+                    czy_smak_był[random_smak] = 1;
+                    sekwencja_dla_danej_proby[ile_smakow] = random_smak;
+                    ile_smakow++;
+                }
             }
-            sequence_for_current_attemp[6]=sequence_for_current_attemp[0];
+            //przestrojenie
+            sekwencja_dla_danej_proby[koszty.length] = sekwencja_dla_danej_proby[0];
 
-            int curr_value = 0;
+            int obecny_koszt = 0;
 
-            for(int d = 0; d < sequence_for_current_attemp.length-1; d++){
-                curr_value+=costs[sequence_for_current_attemp[d]][sequence_for_current_attemp[d+1]];
+            for(int j = 0; j < sekwencja_dla_danej_proby.length-1; j++) {
+                obecny_koszt += koszty[sekwencja_dla_danej_proby[j]][sekwencja_dla_danej_proby[j + 1]];
             }
-
-            if (curr_value < best_value){
-                best_sequence = sequence_for_current_attemp;
-                best_value=curr_value;
+            if (obecny_koszt < bestValue) {
+                bestValue = obecny_koszt;
+                najlepsze = sekwencja_dla_danej_proby;
             }
         }
-        System.out.println("The best sequence(value: " + best_value +"):");
-
-        for (int i = 0; i < best_sequence.length; i++) {
-            System.out.print(best_sequence[i]+1 + " ");
+        System.out.println("Najmniejszy koszt: " + bestValue + " dla sekwencji: ");
+        for (int j = 0; j < najlepsze.length; j++) {
+            System.out.print(najlepsze[j]+1 + " ");
         }
     }
 
@@ -238,46 +247,50 @@ public class Main {
                 {31, 29, 5, 18, 0, 4},
                 {28, 24, 1, 17, 5, 0}
         };
-        int[] smaki_ktore_byly = new int[koszty.length];
-        int min = 1111111;
-        int start_min = 0;
-        int wiersz=-1;
-        int koszt = 0;
-        int start = 0;
+        int czas=0;
+        int tempczas=0;
+        int start;
+        boolean[] bylo= new boolean[koszty.length];
+        for(int i =0;i<bylo.length;i++){
+            bylo[i]=false;
+        }
+        int wiersz=0;
+        int min = Integer.MAX_VALUE;
 
-        //znajdz smak od którego zaczynamy
-        for(int i = 0; i < koszty.length; i++){
-            for(int j = 0; j < koszty[0].length; j++){
-                if(koszty[i][j] !=0 && koszty[i][j] < min){
-                    min = koszty[i][j];
-                    wiersz = i;
-                    start = i;
-                    start_min = min;
+        //Sprawdzamy pierwszy smak
+        for (int i=0;i<koszty.length;i++) {
+            for (int j=0;j<koszty.length;j++) {
+                if ( koszty[i][j]>0 && koszty[i][j]<min) {
+                    wiersz=i;
+                    min=koszty[i][j];
                 }
             }
         }
-        koszt+=min;
-        smaki_ktore_byly[wiersz] = 1;
+        start=wiersz;
+        System.out.println("Smaki:");
+        System.out.println(wiersz+1);
+        bylo[wiersz]=true;
+        int minIndex =-1;
 
-        System.out.print("Kolejne smaki: " + (wiersz+1) + " ");
-
-        //kolejne smaki
-        int index_min=-1;
-        for (int i = 0; i < koszty.length-1; i++) {
-            int min_koszt_zmiany = 11111;
-            for(int j = 0; j < koszty[0].length; j++){
-                if(koszty[wiersz][j] != 0 && koszty[wiersz][j] < min_koszt_zmiany && smaki_ktore_byly[j] != 1){
-                    min_koszt_zmiany = koszty[wiersz][j];
-                    index_min = j;
+        //Sprawdzamy na jakie smaki kolejno przerobić
+        for(int i=0;i< koszty.length-1;i++){
+            min=Integer.MAX_VALUE;
+            for(int j=0;j< koszty[0].length;j++){
+                if(koszty[wiersz][j]<min &&koszty[wiersz][j]>0 && bylo[j]==false){
+                    min=koszty[wiersz][j];
+                    minIndex=j;
+                    tempczas=koszty[wiersz][j];
                 }
             }
-            koszt+= koszty[wiersz][index_min];
-            wiersz = index_min;
-            smaki_ktore_byly[wiersz] = 1;
-            System.out.print(wiersz+1 + " ");
+            wiersz=minIndex;
+            bylo[minIndex]=true;
+            czas+=tempczas;
+            System.out.println(wiersz+1);
         }
-        System.out.print(start+1);
-        koszt+=koszty[wiersz][start];
-        System.out.println(" Koszt wynosi: " + koszt);
+
+        //Przestrajamy na następny dzień
+        czas+=koszty[wiersz][start];
+        System.out.println(start+1);
+        System.out.println("CZAS: "+czas);
     }
 }
