@@ -4,19 +4,177 @@ import java.util.Scanner;
 
 public class Main {
 
-    final static int[] v = {6,2,3,2,3,1};//obj przedmiotów
+    final static int[] v = {6,2,3,2,3,1};//obj
     static final int[] w = {6,4,5,7,10,2};//wartosci przedmiotów
     static int MAX_V = 10;
 
     public static void main(String[] args) {
-        dupa9();
+        dupa13();
     }
 
+    //plecak rekurencja
     public static int dupa10(int i, int V){
         if(i == 0 && v[i] > V) return 0;
-        if(i == 0 && v[i] <= V) return w[i];
-        if(i > 0 && v[i] > V) return dupa10(i-1,V);
-        return Math.max(dupa10(i-1,V), w[i] + dupa10(i-1,V-v[i]));
+        if(i == 0 && v[i]<=V) return w[i];
+        if(i !=0 && v[i]>V) return dupa10(i-1, V);
+        return Math.max(dupa10(i-1, V), w[i] + dupa10(i-1, V-v[i]));
+    }
+
+    //plecak dynamiczne
+    public static void dupa11(){
+        int[] v = {6,2,3,2,3,1};//obj
+        int[] w = {6,4,5,7,10,2};//wartosci przedmiotów
+        int MAX_V = 10;
+
+        int[][] rozw = new int[w.length][MAX_V+1];
+        for(int i = 0; i < w.length; i++){
+            for(int j = 0; j < MAX_V+1; j++){
+                if(i==0 && v[i] > j) rozw[i][j] = 0;
+                if(i==0 && v[i] <= j) rozw[i][j] = w[i];
+                if(i!=0 && v[i] > j) rozw[i][j] = rozw[i-1][j];
+                if(i!=0 && v[i] <= j) rozw[i][j] = Math.max(rozw[i-1][j], w[i] + rozw[i-1][j-v[i]]);
+            }
+        }
+
+        for(int i = 0; i < w.length; i++){
+            for(int j = 0; j < MAX_V+1; j++){
+                System.out.print(rozw[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    //lody montecarlo
+    public static void dupa8(){
+        Random rand = new Random();
+        final int[][] koszty = {
+                {0, 7, 20, 21, 12, 23},
+                {27, 0, 13, 16, 46, 5},
+                {53, 15, 0, 25, 27, 6},
+                {16, 2, 35, 0, 47, 10},
+                {31, 29, 5, 18, 0, 4},
+                {28, 24, 1, 17, 5, 0}
+        };
+        int proby = 100;
+        int najlepsza_wartosc = 213321;
+        int[] najlepsza_sekwencja = new int[koszty.length+1];
+
+        for(int i = 0; i < proby; i++){
+            int sekwencja_dla_proby[] = new int[koszty.length+1];
+            int smaki_co_byly[] = new int[koszty.length];
+            int ile_smakow = 0;
+            while(ile_smakow < koszty.length){
+                int losowy_smak = rand.nextInt(koszty.length);
+                if(smaki_co_byly[losowy_smak]==0){
+                    smaki_co_byly[losowy_smak] = 1;
+                    sekwencja_dla_proby[ile_smakow] = losowy_smak;
+                    ile_smakow++;
+                }
+            }
+
+            //przestrojenie
+            sekwencja_dla_proby[koszty.length] = sekwencja_dla_proby[0];
+
+            //zliczanie wartości dla sekwencji
+            int wartosc_dla_sekwencji = 0;
+            for(int d = 0; d < sekwencja_dla_proby.length-1; d++){
+                wartosc_dla_sekwencji+=koszty[sekwencja_dla_proby[d]][sekwencja_dla_proby[d+1]];
+            }
+            if(wartosc_dla_sekwencji < najlepsza_wartosc){
+                najlepsza_wartosc=wartosc_dla_sekwencji;
+                najlepsza_sekwencja=sekwencja_dla_proby;
+            }
+        }
+
+        System.out.println("Najmniejsza wartość: " + najlepsza_wartosc);
+        System.out.println("Dla sekwencji: ");
+        for(int i = 0; i < najlepsza_sekwencja.length; i++){
+            System.out.print((najlepsza_sekwencja[i]+1) + " ");
+        }
+    }
+
+    //lody zachłannie
+    public static void dupa12(){
+        final int[][] koszty = {
+                {0, 7, 20, 21, 12, 23},
+                {27, 0, 13, 16, 46, 5},
+                {53, 15, 0, 25, 27, 6},
+                {16, 2, 35, 0, 47, 10},
+                {31, 29, 5, 18, 0, 4},
+                {28, 24, 1, 17, 5, 0}
+        };
+
+        int pierwszy_smak_wiersz = 0;
+        int min_pierwszy_smak = 123123;
+        int czas = 0;
+        int[]czy_smak_byl = new int[koszty.length];
+
+        for(int i = 0; i < koszty.length; i++){
+            for(int j = 0; j<koszty[0].length; j++){
+                if(koszty[i][j] > 0 && koszty[i][j] < min_pierwszy_smak){
+                    pierwszy_smak_wiersz = i;
+                    min_pierwszy_smak = koszty[i][j];
+                }
+            }
+        }
+        czy_smak_byl[pierwszy_smak_wiersz] = 1;
+        System.out.println((pierwszy_smak_wiersz+1));
+
+        //kolejne smaki
+        int wiersz = pierwszy_smak_wiersz;
+        int index_min = -1;
+        for(int i = 0; i < koszty.length-1; i++){
+            int min = 2321313;
+            for(int j = 0; j<koszty[0].length; j++){
+                if(koszty[wiersz][j] > 0 && koszty[wiersz][j] < min && czy_smak_byl[j] == 0){
+                   min = koszty[wiersz][j];
+                   index_min = j;
+                }
+            }
+            czas+=min;
+            wiersz=index_min;
+            System.out.println("min: + " + min + " czas: " + czas);
+            czy_smak_byl[wiersz] = 1;
+
+        }
+        //przestrojenie
+        System.out.println(pierwszy_smak_wiersz+1);
+        czas+=koszty[wiersz][pierwszy_smak_wiersz];
+        System.out.println("min: + " + koszty[wiersz][pierwszy_smak_wiersz] + " czas: " + czas);
+    }
+
+    //plecak zachlannie(najbardziej wartosciowe)
+    public static void dupa13(){
+        final int[] v = {1,2,3,2,3,1};  // objetosci przedmiotow
+        final int[] w = {6,4,5,7,10,2};
+        int MAX_V = 10;
+
+        int[] czy_byl = new int[v.length];
+        int sumaV = 0;
+        int sumaW = 0;
+
+        while(true){
+            int max_wartosc = 0;
+            int max_poz=-1;
+            for(int i = 0; i < v.length; i++){
+                if(czy_byl[i]==0 && w[i]>max_wartosc && sumaV+v[i]<=MAX_V){
+                    max_wartosc=w[i];
+                    max_poz=i;
+                }
+            }
+            if(max_poz!=-1){
+                czy_byl[max_poz]=1;
+                sumaW+=max_wartosc;
+                sumaV+=v[max_poz];
+            }else{
+                break;
+            }
+        }
+        System.out.println(sumaW);
+        System.out.println("Rozwiązanie(przedmioty po wartosciach): ");//1 bierzemy, 0 nie
+        for (int i = 0; i < czy_byl.length; i++) {
+            System.out.println("Przedmiot " + i + " - " + czy_byl[i]);
+        }
     }
 
     public static int dupa(int n){
@@ -189,52 +347,6 @@ public class Main {
             }
         }else{
             System.out.println("Nie ma rozwiązania");
-        }
-    }
-
-    public static void dupa8(){
-        Random rand = new Random();
-        final int[][] koszty = {
-                {0, 7, 20, 21, 12, 23},
-                {27, 0, 13, 16, 46, 5},
-                {53, 15, 0, 25, 27, 6},
-                {16, 2, 35, 0, 47, 10},
-                {31, 29, 5, 18, 0, 4},
-                {28, 24, 1, 17, 5, 0}
-        };
-        int proby = 100;
-        int[] najlepsze = new int[koszty.length+1];
-        int bestValue = 123213123;
-
-        //losuj sekwencje smaków
-        for(int i = 0 ; i < proby; i++){
-            int ile_smakow = 0;
-            int[] czy_smak_był = new int[koszty.length];
-            int sekwencja_dla_danej_proby[] = new int[koszty.length+1];
-            while(ile_smakow < koszty.length){
-                int random_smak = rand.nextInt(koszty.length);
-                if(czy_smak_był[random_smak] == 0){
-                    czy_smak_był[random_smak] = 1;
-                    sekwencja_dla_danej_proby[ile_smakow] = random_smak;
-                    ile_smakow++;
-                }
-            }
-            //przestrojenie
-            sekwencja_dla_danej_proby[koszty.length] = sekwencja_dla_danej_proby[0];
-
-            int obecny_koszt = 0;
-
-            for(int j = 0; j < sekwencja_dla_danej_proby.length-1; j++) {
-                obecny_koszt += koszty[sekwencja_dla_danej_proby[j]][sekwencja_dla_danej_proby[j + 1]];
-            }
-            if (obecny_koszt < bestValue) {
-                bestValue = obecny_koszt;
-                najlepsze = sekwencja_dla_danej_proby;
-            }
-        }
-        System.out.println("Najmniejszy koszt: " + bestValue + " dla sekwencji: ");
-        for (int j = 0; j < najlepsze.length; j++) {
-            System.out.print(najlepsze[j]+1 + " ");
         }
     }
 
