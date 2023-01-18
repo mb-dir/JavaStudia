@@ -7,9 +7,68 @@ public class Main {
     final static int[] v = {6,2,3,2,3,1};//obj
     static final int[] w = {6,4,5,7,10,2};//wartosci przedmiotów
     static int MAX_V = 10;
+    static int [] tablica = {1,5,4,3,1,6,8,41,4,6,8,4,1,5};
 
     public static void main(String[] args) {
-        dupa13();
+        System.out.println("Przed posorotwaniem");
+        for (int el: tablica) {
+            System.out.print(el + " ");
+        }
+        System.out.println();
+        mergeSort(0, tablica.length-1);
+        System.out.println("Po posorotwaniu");
+        for (int el: tablica) {
+            System.out.print(el + " ");
+        }
+    }
+
+    public static void merge(int l, int m, int r){
+        int [] tempArray = new int[r-l+1];
+        int i = l;
+        int j = m+1;
+        int k = 0;
+
+        //lecimy po dwóch podproblemach na raz
+        while((i <= m) || (j<=r)){
+            //gdy pierwszy podproblem jest już wyczerpany
+            if(i == m+1){
+                tempArray[k] = tablica[j];
+                k++;
+                j++;
+            }else if(j == r+1){//jeżeli prawy podproblem osiągnął swój kres
+                tempArray[k] = tablica[i];
+                k++;
+                i++;
+            }else{//scalanie dwóch podproblemów(żaden z podproblemów sie nie wyczerpał jeszcze)
+                if(tablica[i] <= tablica[j]){//jeżeli element z lewego podproblemu jest mniejszy
+                    tempArray[k] = tablica[i];
+                    i++;
+                    k++;
+                }else{
+                    tempArray[k] = tablica[j];
+                    j++;
+                    k++;
+                }
+            }
+        }
+
+        //aktualizacja orginalnej tablicy
+        int d = l;
+        for(int q = 0; q < tempArray.length; q++){
+            tablica[d] = tempArray[q];
+            d++;
+        }
+
+    }
+
+    public static void mergeSort(int l, int r){
+        int m = (l+r)/2;
+        if(l < r){//dopóki jest więcej niż jeden element
+            mergeSort(l, m);//wywołanie dla lewego podproblemu
+            mergeSort(m+1, r);//wywołanie dla prawego podproblemu
+            merge(l, m, r);
+        }
+
     }
 
     //plecak rekurencja
